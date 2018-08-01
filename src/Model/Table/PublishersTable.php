@@ -66,6 +66,7 @@ class PublishersTable extends Table
 
         $validator
             ->scalar('description')
+            ->maxLength('description', 350, __('Слишком длинное описание'))
             ->allowEmpty('description');
 
         return $validator;
