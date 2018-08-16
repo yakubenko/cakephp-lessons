@@ -20,6 +20,7 @@
     <div class="container app">
         <div class="row">
             <div class="col-md-12">
+                <?= $this->Flash->render(); ?>
                 <?= $this->fetch('content') ?>
             </div>
         </div>

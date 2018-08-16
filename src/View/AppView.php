@@ -39,5 +39,7 @@ class AppView extends View
         $this->loadHelper('Form', [
             'templates' => 'forms'
         ]);
+
+        $this->loadHelper('Flash');
     }
 }

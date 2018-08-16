@@ -26,10 +26,46 @@ class PublishersController extends AppController
             ]);
 
             if ($this->Publishers->save($publisher)) {
+                $this->Flash->success(__('Был добавлен издатель'));
+
                 return $this->redirect('/publishers');
             }
         }
 
         $this->set('publisher', $publisher);
+    }
+
+    public function edit($id = null)
+    {
+        $publisher = $this->Publishers->find('all')->where(['id' => $id])->first();
+
+        if ($this->request->is(['post', 'put'])) {
+            $title = $this->request->getData('title');
+            $description = $this->request->getData('description');
+
+            $this->Publishers->patchEntity($publisher, [
+                'title' => $title,
+                'description' => $description
+            ]);
+
+            if ($this->Publishers->save($publisher)) {
+                $this->Flash->success(__('Издатель был изменен'));
+
+                return $this->redirect('/publishers');
+            }
+        }
+
+        $this->set(compact('publisher'));
+    }
+
+    public function delete($id = null)
+    {
+        $publisher = $this->Publishers->find('all')->where(['id' => $id])->first();
+
+        if ($this->Publishers->delete($publisher)) {
+            $this->Flash->success(__('Издатель был удален'));
+
+            return $this->redirect('/publishers');
+        }
     }
 }
