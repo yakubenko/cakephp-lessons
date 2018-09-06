@@ -214,3 +214,5 @@ Type::build('timestamp')
 if (Configure::read('debug')) {
     //Plugin::load('DebugKit', ['bootstrap' => true]);
 }
+
+Type::map('file', 'App\Database\Type\FileType');

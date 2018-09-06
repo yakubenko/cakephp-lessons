@@ -40,3 +40,4 @@ nbproject/*
 .sass-cache/
 .vscode
 phinx.yml
+webroot/uploads/*

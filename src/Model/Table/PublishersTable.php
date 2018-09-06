@@ -5,6 +5,11 @@ use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
+use Cake\Database\Schema\TableSchema;
+use Cake\Event\Event;
+use Cake\ORM\Entity;
+use ArrayObject;
+use App\Model\Util\ImagerUtility;
 
 /**
  * Publishers Model
@@ -21,6 +26,12 @@ use Cake\Validation\Validator;
  */
 class PublishersTable extends Table
 {
+    protected function _initializeSchema(TableSchema $schema)
+    {
+        $schema->setColumnType('logotype', 'file');
+
+        return $schema;
+    }
 
     /**
      * Initialize method
@@ -60,9 +71,12 @@ class PublishersTable extends Table
             ->notEmpty('title');
 
         $validator
-            ->scalar('logotype')
-            ->maxLength('logotype', 100)
             ->allowEmpty('logotype');
+
+        $validator->add('logotype', 'valid-image', [
+            'rule' => ['extension', ['jpg', 'jpeg']],
+            'message' => __('Only JPEG images are allowed')
+        ]);
 
         $validator
             ->scalar('description')
@@ -70,5 +84,29 @@ class PublishersTable extends Table
             ->allowEmpty('description');
 
         return $validator;
+    }
+
+    public function buildRules(RulesChecker $rules)
+    {
+        return $rules;
+    }
+
+    public function beforeSave(Event $event, Entity $entity, ArrayObject $options)
+    {
+        if (!empty($entity->logotype['tmp_name']) && is_uploaded_file($entity->logotype['tmp_name'])) {
+            try {
+                $imager = new ImagerUtility();
+                $imager->avatarsDir = WWW_ROOT . DS . 'uploads' . DS;
+                $name = $imager->generateMd5Filename($entity->logotype['tmp_name']) . '.jpg';
+                $imager->resizeAvatar($entity->logotype['tmp_name'], $name);
+
+                $entity->set('logotype', $name);
+            } catch (\Exception $e) {
+                Log::debug($e->getMessage());
+                $entity->set('logotype', $entity->getOriginal('logotype'));
+            }
+        } else {
+            $entity->set('logotype', $entity->getOriginal('logotype'));
+        }
     }
 }

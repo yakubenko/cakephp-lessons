@@ -19,10 +19,12 @@ class PublishersController extends AppController
         if ($this->request->is('post')) {
             $title = $this->request->getData('title');
             $description = $this->request->getData('description');
+            $logotype = $this->request->getData('logotype');
 
             $this->Publishers->patchEntity($publisher, [
                 'title' => $title,
-                'description' => $description
+                'description' => $description,
+                'logotype' => $logotype
             ]);
 
             if ($this->Publishers->save($publisher)) {
