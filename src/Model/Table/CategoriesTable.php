@@ -61,6 +61,8 @@ class CategoriesTable extends Table
             'targetForeignKey' => 'writer_id',
             'joinTable' => 'writers_categories'
         ]);
+
+        $this->addBehavior('Tree');
     }
 
     /**

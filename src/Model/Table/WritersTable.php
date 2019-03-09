@@ -88,12 +88,11 @@ class WritersTable extends Table
             ->allowEmpty('bio');
 
         $validator
-            ->integer('year_b')
-            ->requirePresence('year_b', 'create')
-            ->notEmpty('year_b');
+            ->date('year_b', ['y'])
+            ->allowEmpty('year_b');
 
         $validator
-            ->integer('year_d')
+            ->date('year_d', ['y'])
             ->allowEmpty('year_d');
 
         return $validator;

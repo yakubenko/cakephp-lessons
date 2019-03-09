@@ -7,7 +7,7 @@ class PublishersController extends AppController
 {
     public function index()
     {
-        $publishers = $this->Publishers->find('all')->order(['id' => 'desc'])->toArray();
+        $publishers = $this->Publishers->find('all')->order(['id' => 'desc']);
 
         $this->set('publishers', $publishers);
     }
@@ -44,10 +44,12 @@ class PublishersController extends AppController
         if ($this->request->is(['post', 'put'])) {
             $title = $this->request->getData('title');
             $description = $this->request->getData('description');
+            $logotype = $this->request->getData('logotype');
 
             $this->Publishers->patchEntity($publisher, [
                 'title' => $title,
-                'description' => $description
+                'description' => $description,
+                'logotype' => $logotype
             ]);
 
             if ($this->Publishers->save($publisher)) {

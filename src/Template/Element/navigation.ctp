@@ -12,7 +12,7 @@
             <?= $this->Html->link(__('Books'), '/books', ['class' => 'nav-link']) ?>
         </li>
         <li class="nav-item">
-            <?= $this->Html->link(__('Authors'), '/authors', ['class' => 'nav-link']) ?>
+            <?= $this->Html->link(__('Writers'), '/writers', ['class' => 'nav-link']) ?>
         </li>
         <li class="nav-item">
             <?= $this->Html->link(__('Categories'), '/categories', ['class' => 'nav-link']) ?>

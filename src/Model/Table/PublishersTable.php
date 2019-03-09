@@ -1,15 +1,15 @@
 <?php
 namespace App\Model\Table;
 
+use App\Model\Util\ImagerUtility;
+use ArrayObject;
+use Cake\Database\Schema\TableSchema;
+use Cake\Event\Event;
+use Cake\ORM\Entity;
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
-use Cake\Database\Schema\TableSchema;
-use Cake\Event\Event;
-use Cake\ORM\Entity;
-use ArrayObject;
-use App\Model\Util\ImagerUtility;
 
 /**
  * Publishers Model
@@ -93,6 +93,8 @@ class PublishersTable extends Table
 
     public function beforeSave(Event $event, Entity $entity, ArrayObject $options)
     {
+        $oldLogotype = ($entity->isNew()) ? null : $entity->getOriginal('logotype');
+
         if (!empty($entity->logotype['tmp_name']) && is_uploaded_file($entity->logotype['tmp_name'])) {
             try {
                 $imager = new ImagerUtility();
@@ -103,10 +105,10 @@ class PublishersTable extends Table
                 $entity->set('logotype', $name);
             } catch (\Exception $e) {
                 Log::debug($e->getMessage());
-                $entity->set('logotype', $entity->getOriginal('logotype'));
+                $entity->set('logotype', $oldLogotype);
             }
         } else {
-            $entity->set('logotype', $entity->getOriginal('logotype'));
+            $entity->set('logotype', $oldLogotype);
         }
     }
 }
