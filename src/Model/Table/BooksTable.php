@@ -91,6 +91,11 @@ class BooksTable extends Table
             ->integer('year')
             ->allowEmpty('year');
 
+        $validator
+            ->requirePresence('publisher_id', 'create')
+            ->notEmpty('publisher_id')
+            ->integer('publisher_id');
+
         return $validator;
     }
 

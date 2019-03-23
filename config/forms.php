@@ -4,7 +4,7 @@ return [
     'inputContainerError' => '<div class="form-group {{required}} error">{{content}}<small class="form-text text-muted">{{help}}</small>{{error}}</div>',
     'error' => '<div class="invalid-field">{{content}}</div>',
     'input' => '<input type="{{type}}" class="form-control" name="{{name}}"{{attrs}} />',
-    // 'checkbox' => '<input type="checkbox" class="form-check-input" name="{{name}}" value="{{value}}"{{attrs}}>',
+    'checkbox' => '<input type="checkbox" class="form-check-input" name="{{name}}" value="{{value}}"{{attrs}} />',
     'checkboxFormGroup' => '<div class="form-check">{{label}}</div>',
     'checkboxWrapper' => '<div class="form-check">{{label}}</div>',
     'nestingLabel' => '{{hidden}}{{input}}<label {{attrs}}>{{text}}</label>',

@@ -34,7 +34,7 @@ class WritersTable extends Table
         parent::initialize($config);
 
         $this->setTable('writers');
-        $this->setDisplayField('id');
+        $this->setDisplayField('firstname');
         $this->setPrimaryKey('id');
 
         $this->belongsToMany('Books', [

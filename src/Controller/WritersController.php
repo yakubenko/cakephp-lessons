@@ -14,7 +14,7 @@ class WritersController extends AppController
     public function add()
     {
         $writer = $this->Writers->newEntity();
-        $categories = $this->Writers->Categories->find('treeList')->toArray();
+        $categories = $this->Writers->Categories->find('treeList', ['spacer' => '--'])->toArray();
 
         if ($this->request->is('post')) {
             $firstname = $this->request->getData('firstname');
@@ -48,12 +48,13 @@ class WritersController extends AppController
         }
 
         $this->set(compact('writer', 'categories'));
+        $this->render('form');
     }
 
     public function edit($id = null)
     {
         $writer = $this->Writers->find('all')->where(['Writers.id' => $id])->contain(['Categories'])->first();
-        $categories = $this->Writers->Categories->find('treeList')->toArray();
+        $categories = $this->Writers->Categories->find('treeList', ['spacer' => '--'])->toArray();
 
         $selectedCats = array_map(function ($el) {
             return $el['id'];
@@ -91,6 +92,7 @@ class WritersController extends AppController
         }
 
         $this->set(compact('writer', 'categories', 'selectedCats'));
+        $this->render('form');
     }
 
     public function delete($id = null)
